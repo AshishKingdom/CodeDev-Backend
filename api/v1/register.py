@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from schemas.registration import RegistrationForm
 from db.session import get_db
-from db.models.user import User
+from db.models.user import Users
 from core.security import get_hashed_password
 
 router = APIRouter()
@@ -12,14 +12,14 @@ router = APIRouter()
 @router.post("/register", tags=["user"])
 async def register_user(form: RegistrationForm, db: Session = Depends(get_db)):
     # noinspection PyTypeChecker
-    user_exists = db.query(User).filter(User.username == form.username).first()
+    user_exists = db.query(Users).filter(Users.username == form.username).first()
     if user_exists is not None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Username already exists. Please try different username"
         )
     # noinspection PyTypeChecker
-    email_exists = db.query(User).filter(User.email == form.email).first()
+    email_exists = db.query(Users).filter(Users.email == form.email).first()
     if email_exists is not None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -28,7 +28,7 @@ async def register_user(form: RegistrationForm, db: Session = Depends(get_db)):
 
     hashed_pwd = get_hashed_password(form.password)
     # ek new entry
-    user = User(
+    user = Users(
         username=form.username,
         first_name=form.first_name,
         last_name=form.last_name,

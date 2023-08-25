@@ -1,9 +1,9 @@
 from sqlalchemy import Boolean, Column, String, DATETIME
+from sqlalchemy.orm import relationship
+from db.session import Base
 
-from db.session import Base, engine
 
-
-class User(Base):
+class Users(Base):
     __tablename__ = 'users'
 
     username = Column(String, primary_key=True, index=True)
@@ -17,5 +17,6 @@ class User(Base):
     is_banned = Column(Boolean, default=False)
     is_email_verified = Column(Boolean, default=False)
 
+    submissions = relationship("Submissions", back_populates='user')
 
-Base.metadata.create_all(engine)
+
