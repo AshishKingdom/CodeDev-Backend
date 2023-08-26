@@ -25,4 +25,4 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
             detail="Invalid username/password"
         )
 
-    return {"access_token": get_access_token({"user": user.username}), "is_admin": user.is_admin}
+    return {"access_token": get_access_token({"user": user.username, "is_admin": user.is_admin}), "is_admin": user.is_admin}

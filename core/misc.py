@@ -10,8 +10,8 @@ reusesable_oath = OAuth2PasswordBearer(
 )
 
 
-def get_current_user(token: str = Depends(reusesable_oath)) -> str:
-    username = None
+def get_current_userinfo(token: str = Depends(reusesable_oath)) -> dict:
+    payload: dict = {}
     try:
         payload = jwt.decode(token, Settings.JWT_ACCESS_KEY, Settings.JWT_ALGORITHM)
         exp_time = payload.get("exp")
@@ -21,7 +21,6 @@ def get_current_user(token: str = Depends(reusesable_oath)) -> str:
                 detail="Access token expired.",
                 headers={"WWW-Authenticate": "Bearer"}
             )
-        username = payload.get("user")
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -29,4 +28,4 @@ def get_current_user(token: str = Depends(reusesable_oath)) -> str:
             headers={"WWW-Authenticate": "Bearer"}
         )
 
-    return username
+    return payload

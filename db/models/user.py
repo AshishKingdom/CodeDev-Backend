@@ -17,6 +17,6 @@ class Users(Base):
     is_banned = Column(Boolean, default=False)
     is_email_verified = Column(Boolean, default=False)
 
-    submissions = relationship("Submissions", back_populates='user')
+    # submissions = relationship("Submissions", back_populates='user')
 
 
