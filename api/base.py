@@ -6,7 +6,7 @@ from api.v1 import login
 from api.v1 import me
 from api.v1 import create_contest
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 router.include_router(hello.router)
 router.include_router(register.router)
