@@ -15,9 +15,15 @@ from schemas.contests import ContestQueryResult, SingleContest, ProblemIDName, C
 router = APIRouter()
 
 
-@router.get("/contests", tags=["contest"])
-def get_contests(flag: str = "all", db: Session = Depends(get_db)) -> ContestQueryResult:
+@router.get("/contests/{flag}", tags=["contest"])
+def get_contests(flag: str , db: Session = Depends(get_db)) -> ContestQueryResult:
+    if flag is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail='flag is required'
+        )
     flag = flag.lower()
+    print(flag)
 
     contest_data = []
     data = None
