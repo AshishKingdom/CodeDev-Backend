@@ -54,7 +54,7 @@ def get_contests(flag: str , db: Session = Depends(get_db)) -> ContestQueryResul
             SingleContest(
                 id=p.contest_id,
                 name=p.contest_name,
-                description=p.contest_name,
+                description=p.description,
                 start=p.start,
                 end=p.end
             )

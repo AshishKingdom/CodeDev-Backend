@@ -29,6 +29,6 @@ class ContestData(BaseModel):
 
     contest_name: str
     description: str
-    start: datetime
+    start: int
     duration: int
     problems: List[ProblemData]
